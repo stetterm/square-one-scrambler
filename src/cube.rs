@@ -2,6 +2,8 @@
 //! with the orientation of a square 1
 //! cube in order to produce a scramble.
 
+use crate::Scramble;
+
 #[derive(Copy, Clone, Eq, PartialEq, Debug)]
 #[repr(u8)]
 enum Color {
@@ -303,7 +305,7 @@ impl SqOne {
     /// Scrambles the cube using NUM_FLIPS
     /// twists/flips, and then returns the
     /// list of twists to get the scramble.
-    pub fn scramble(&mut self) -> Vec<(i8, i8)> {
+    pub fn scramble(&mut self) -> Scramble {
         const NUM_FLIPS: u32 = 20;
         let mut twists = vec![];
 
@@ -336,7 +338,7 @@ impl SqOne {
             twists.push((top_layer_offset, -bot_layer_offset));
         }
 
-        twists
+        Scramble { turns: twists }
     }
 }
 
@@ -374,6 +376,6 @@ mod tests {
     fn scramble_cube() {
         let mut test_cube = SqOne::new();
         let scramble = test_cube.scramble();
-        dbg!(scramble);
+        println!("{}", scramble);
     }
 }
